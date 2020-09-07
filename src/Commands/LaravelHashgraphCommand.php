@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Skeleton\Commands;
+namespace Trustenterprises\LaravelHashgraph\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelHashgraphCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-hashgraph';
 
     public $description = 'My command';
 

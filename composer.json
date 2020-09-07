@@ -1,16 +1,16 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "laravel-hashgraph",
+    "description": "Laravel package to automatically handle adding trust to any SaaS product",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "",
+        "laravel-hashgraph"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com//laravel-hashgraph",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "Matt Smithies",
+            "email": "info@mattsmithies.co.uk",
             "homepage": "https://spatie.be",
             "role": "Developer"
         }
@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Trustenterprises\\LaravelHashgraph\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Trustenterprises\\LaravelHashgraph\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,10 +47,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "Trustenterprises\\LaravelHashgraph\\LaravelHashgraphServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "LaravelHashgraph": "Trustenterprises\\LaravelHashgraph\\LaravelHashgraphFacade"
             }
         }
     },

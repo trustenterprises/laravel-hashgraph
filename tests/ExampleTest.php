@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Trustenterprises\LaravelHashgraph\Tests;
 
 class ExampleTest extends TestCase
 {

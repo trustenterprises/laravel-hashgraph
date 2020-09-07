@@ -1,9 +1,10 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Trustenterprises\LaravelHashgraph\Tests;
 
+use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\Skeleton\SkeletonServiceProvider;
+use Trustenterprises\LaravelHashgraph\LaravelHashgraphServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -12,12 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->withFactories(__DIR__.'/database/factories');
+
+        Route::hashgraph('hashgraph');
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            SkeletonServiceProvider::class,
+            LaravelHashgraphServiceProvider::class,
         ];
     }
 
@@ -31,7 +34,7 @@ class TestCase extends Orchestra
         ]);
 
         /*
-        include_once __DIR__.'/../database/migrations/create_skeleton_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_laravel_hashgraph_table.php.stub';
         (new \CreatePackageTable())->up();
         */
     }
