@@ -10,18 +10,22 @@ class CreateLaravelHashgraphTables extends Migration
     {
         Schema::create('hashgraph_topics', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            // add fields
-
+            $table->string('name')->unique()->index();
+            $table->string('topic_id')->unique()->index();
             $table->timestamps();
         });
 
         Schema::create('hashgraph_consensus_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            // add fields
-
+            $table->string('reference');
+            $table->string('topic_id');
+            $table->string('transaction_id');
+            $table->string('explorer_url');
+            $table->string('consensus_timestamp_seconds');
+            $table->string('consensus_timestamp_nanos');
             $table->timestamps();
+
+            $table->foreign('topic_id')->references('topic_id')->on('hashgraph_topics');
         });
     }
 }
