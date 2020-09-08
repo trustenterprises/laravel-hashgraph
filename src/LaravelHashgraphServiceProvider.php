@@ -41,6 +41,10 @@ class LaravelHashgraphServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/laravel-hashgraph.php', 'laravel-hashgraph');
+
+        $this->app->bind('LaravelHashgraph', function ($app) {
+            return new LaravelHashgraph();
+        });
     }
 
     public static function migrationFileExists(string $migrationFileName): bool
