@@ -12,11 +12,9 @@ class HashgraphTopicTest extends TestCase
     {
         HashgraphTopic::create([
             "name" => 'test',
-            "topic_id" => 'test'
+            "topic_id" => 'test',
         ]);
 
         $this->assertEquals(HashgraphTopic::count(), 1);
-
-
     }
 }
