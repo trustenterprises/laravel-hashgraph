@@ -4,7 +4,6 @@
 namespace Trustenterprises\LaravelHashgraph\Tests;
 
 //use Trustenterprises\LaravelHashgraph\LaravelHashgraph;
-use Trustenterprises\LaravelHashgraph\LaravelHashgraphFacade;
 
 class LaravelHashgraphTest extends TestCase
 {
@@ -15,7 +14,6 @@ class LaravelHashgraphTest extends TestCase
      */
     public function laravel_hashgraph_facade()
     {
-
         LaravelHashgraph::add(4);
 
         error_log(LaravelHashgraph::getResult());
