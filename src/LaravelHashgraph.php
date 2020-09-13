@@ -6,9 +6,9 @@ class LaravelHashgraph
 {
     private int $result;
 
-    public function __construct()
+    public function __construct($int = 0)
     {
-        $this->result = 0;
+        $this->result = $int;
     }
 
     public function add(int $value)

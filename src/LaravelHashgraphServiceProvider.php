@@ -8,6 +8,8 @@ use Trustenterprises\LaravelHashgraph\Http\Controllers\LaravelHashgraphWebhookCo
 
 class LaravelHashgraphServiceProvider extends ServiceProvider
 {
+    const HASHGRAPH_SERVICE_NAME = 'hashgraph_trust';
+
     public function boot()
     {
         if ($this->app->runningInConsole()) {
@@ -42,7 +44,7 @@ class LaravelHashgraphServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/laravel-hashgraph.php', 'laravel-hashgraph');
 
-        $this->app->bind('LaravelHashgraph', function ($app) {
+        $this->app->bind(LaravelHashgraphServiceProvider::HASHGRAPH_SERVICE_NAME, function ($app) {
             return new LaravelHashgraph();
         });
     }
