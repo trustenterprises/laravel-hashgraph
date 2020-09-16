@@ -3,8 +3,6 @@
 
 namespace Trustenterprises\LaravelHashgraph\Http\Client;
 
-
 class ServerlessHashgraphClient
 {
-
 }

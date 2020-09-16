@@ -3,10 +3,8 @@
 
 namespace Trustenterprises\LaravelHashgraph\Http\Client\Models;
 
-
 class ConsensusMessage
 {
-
     private String $topic_id;
 
     private String $message;
