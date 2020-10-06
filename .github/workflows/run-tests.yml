@@ -5,6 +5,10 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    env:
+      HASHGRAPH_NODE_URL: ${{ secrets.HASHGRAPH_NODE_URL }}
+      HASHGRAPH_SECRET_KEY: ${{ secrets.HASHGRAPH_SECRET_KEY }}
+
     strategy:
       fail-fast: true
       matrix:
