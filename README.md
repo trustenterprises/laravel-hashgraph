@@ -1,4 +1,4 @@
-# Laravel Hashgraph: Prove of anything, record any provable trust to Laravel in less than 2 minutes.
+# Laravel Hashgraph: Proof of anything, record any provable trust to Laravel in less than 2 minutes.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/laravel-hashgraph/run-tests?label=tests)](https://github.com//laravel-hashgraph/actions?query=workflow%3Arun-tests+branch%3Amaster)
