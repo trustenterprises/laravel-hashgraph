@@ -2,8 +2,12 @@
     "name": "trustenterprises/hashgraph",
     "description": "Laravel package to automatically handle adding trust to any SaaS product",
     "keywords": [
-        "",
-        "laravel-hashgraph"
+        "hedera",
+        "hashhgraph",
+        "blockchain",
+        "trust",
+        "crypto",
+        "laravel"
     ],
     "homepage": "https://github.com//laravel-hashgraph",
     "license": "MIT",
