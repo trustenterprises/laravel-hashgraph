@@ -4,7 +4,9 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/laravel-hashgraph/run-tests?label=tests)](https://github.com//laravel-hashgraph/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
 
-Trust backed by Hedera Hashgraph using your own serverless REST client by Trust Enterprises,  
+Trust backed by Hedera Hashgraph using your own serverless REST client by Trust Enterprises.
+
+The project manages any trust events and consensusu responses, it is a full solution for managing [webhook functionality](https://docs.trust.enterprises/rest-api/webhooks) after a client has received consensus.
 
 ## Support us
 
@@ -47,9 +49,16 @@ return [
 ];
 ```
 
-## Usage
+## Deployment with the hedera serverless client
 
 This is a Laravel library and introduces a migration, listenable events and a new webhook route.
+
+Set the **WEBHOOK_URL** in your serverless client to *domain.com/hashgraph* where domain is your URL. Read more about our [usage of webhooks](https://docs.trust.enterprises/rest-api/webhooks). 
+
+For local development you can use ngrok to expose your local server.
+
+## Usage
+
 
 ``` php
 
