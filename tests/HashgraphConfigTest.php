@@ -3,7 +3,6 @@
 
 namespace Trustenterprises\LaravelHashgraph\Tests;
 
-
 class HashgraphConfigTest extends TestCase
 {
     /**

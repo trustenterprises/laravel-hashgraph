@@ -3,7 +3,6 @@
 
 namespace Trustenterprises\LaravelHashgraph\Events;
 
-
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Trustenterprises\LaravelHashgraph\Models\HashgraphTopic;
