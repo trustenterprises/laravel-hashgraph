@@ -15,7 +15,7 @@ We're looking for ongoing financial support to help with the continuation of the
 You can install the package via composer:
 
 ```bash
-composer require laravel-hashgraph
+composer require trustenterprises/hashgraph
 ```
 
 You can publish and run the migrations with:
