@@ -1,28 +1,21 @@
-# Laravel package to automatically handle adding trust to any SaaS product
+# Laravel Hashgraph: Prove of anything, record any provable trust to Laravel in less than 2 minutes.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v//laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status//laravel-hashgraph/run-tests?label=tests)](https://github.com//laravel-hashgraph/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt//laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/laravel-hashgraph/run-tests?label=tests)](https://github.com//laravel-hashgraph/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
 
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Trust backed by Hedera Hashgraph using your own serverless REST client by Trust Enterprises,  
 
 ## Support us
 
-Learn how to create a package like this one, by watching our premium video course:
-
-[![Laravel Package training](https://spatie.be/github/package-training.jpg)](https://laravelpackage.training)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+We're looking for ongoing financial support to help with the continuation of the development of these libraries and projects, if you are interested in sponsoring us [please get in contact](https://trust.enterprises/#contact). 
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require /laravel-hashgraph
+composer require laravel-hashgraph
 ```
 
 You can publish and run the migrations with:
@@ -41,14 +34,34 @@ This is the contents of the published config file:
 
 ```php
 return [
+    /***
+     * The URL of your serverless hashgraph client that has been configured through the serverless
+     * provider, likely to be vercel.
+     **/
+    'client_url' => env('HASHGRAPH_NODE_URL'),
+
+    /***
+     * The generated secret key that you have set for your serverless hashgraph client.
+     **/
+    'secret_key' => env('HASHGRAPH_SECRET_KEY'),
 ];
 ```
 
 ## Usage
 
+This is a Laravel library and introduces a migration, listenable events and a new webhook route.
+
 ``` php
-$laravel-hashgraph = new Trustenterprises\LaravelHashgraph();
-echo $laravel-hashgraph->echoPhrase('Hello, Trustenterprises!');
+
+// Your Imports
+use Trustenterprises\LaravelHashgraph\LaravelHashgraph;
+use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
+
+// Code
+$message = new ConsensusMessage('This is an event you wish to store');
+$message->setReference('MattSmithies');
+
+LaravelHashgraph::withTopic('Trust Enterprises')->sendMessage($message);
 ```
 
 ## Testing
@@ -67,7 +80,7 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
+If you discover any security related issues, please email info@mattsmithies.co.uk instead of using the issue tracker.
 
 ## Credits
 
