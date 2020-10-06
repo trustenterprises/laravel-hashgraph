@@ -1,10 +1,10 @@
 <?php
 
-namespace Trustenterprises\LaravelHashgraph\Http\Client\Models;
+namespace Trustenterprises\LaravelHashgraph\Models;
 
 class ConsensusMessageResponse
 {
-    private String $reference;
+    private ?String $reference;
 
     private String $topic_id;
 
@@ -15,25 +15,26 @@ class ConsensusMessageResponse
     /*
      * Basic object with seconds and nanos as ints
      */
-    private object $consensus_timestamp;
+    private ?object $consensus_timestamp;
 
     /**
      * ConsensusMessageResponse constructor, using the http response contents body object
-     * @param object $message_response
+     * @param object $response
      */
-    public function __construct(object $message_response)
+    public function __construct(object $response)
     {
-        $this->reference = $message_response->reference;
-        $this->topic_id = $message_response->topic_id;
-        $this->transaction_id = $message_response->transaction_id;
-        $this->explorer_url = $message_response->explorer_url;
-        $this->consensus_timestamp = $message_response->consensus_timestamp;
+        $this->topic_id = $response->topic_id;
+        $this->transaction_id = $response->transaction_id;
+        $this->explorer_url = $response->explorer_url;
+
+        $this->reference = $response->reference ?? null;
+        $this->consensus_timestamp = $response->consensus_timestamp ?? null;
     }
 
     /**
-     * @return String
+     * @return String | null
      */
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }
@@ -63,9 +64,9 @@ class ConsensusMessageResponse
     }
 
     /**
-     * @return object
+     * @return object | null
      */
-    public function getConsensusTimestamp(): object
+    public function getConsensusTimestamp(): ?object
     {
         return $this->consensus_timestamp;
     }

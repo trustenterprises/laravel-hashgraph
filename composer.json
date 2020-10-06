@@ -1,5 +1,5 @@
 {
-    "name": "laravel-hashgraph",
+    "name": "trustenterprises/hashgraph",
     "description": "Laravel package to automatically handle adding trust to any SaaS product",
     "keywords": [
         "",
@@ -11,13 +11,14 @@
         {
             "name": "Matt Smithies",
             "email": "info@mattsmithies.co.uk",
-            "homepage": "https://spatie.be",
-            "role": "Developer"
+            "homepage": "https://trust.enterprises/",
+            "role": "Technical Founder"
         }
     ],
     "require": {
         "php": "^7.4",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",

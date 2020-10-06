@@ -4,6 +4,7 @@ namespace Trustenterprises\LaravelHashgraph;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Trustenterprises\LaravelHashgraph\Commands\LaravelHashgraphCommand;
 use Trustenterprises\LaravelHashgraph\Http\Controllers\LaravelHashgraphWebhookController;
 
 class LaravelHashgraphServiceProvider extends ServiceProvider
@@ -14,39 +15,33 @@ class LaravelHashgraphServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/laravel-hashgraph.php' => config_path('laravel-hashgraph.php'),
+                __DIR__ . '/../config/hashgraph.php' => config_path('hashgraph.php'),
             ], 'config');
 
-//            $this->publishes([
-//                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/laravel-hashgraph'),
-//            ], 'views');
-
-            $migrationFileName = 'create_laravel_hashgraph_table.php';
+            $migrationFileName = 'create_laravel_hashgraph_tables.php';
             if (! $this->migrationFileExists($migrationFileName)) {
                 $this->publishes([
                     __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
                 ], 'migrations');
             }
 
-            // $this->commands([
-            //     LaravelHashgraphCommand::class,
-            // ]);
+            $this->commands([
+                 LaravelHashgraphCommand::class,
+             ]);
         }
 
-        Route::macro('hashgraph', function (string $prefix) {
+        Route::macro('hashgraph', function (string $prefix = 'hashgraph') {
             Route::prefix($prefix)->group(function () {
                 Route::post('/', LaravelHashgraphWebhookController::class);
             });
         });
+
+        Route::hashgraph();
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/laravel-hashgraph.php', 'laravel-hashgraph');
-
-        $this->app->bind(LaravelHashgraphServiceProvider::HASHGRAPH_SERVICE_NAME, function ($app) {
-            return new LaravelHashgraph();
-        });
+        $this->mergeConfigFrom(__DIR__ . '/../config/hashgraph.php', 'laravel-hashgraph');
     }
 
     public static function migrationFileExists(string $migrationFileName): bool

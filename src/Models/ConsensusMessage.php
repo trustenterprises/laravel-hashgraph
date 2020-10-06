@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Trustenterprises\LaravelHashgraph\Http\Client\Models;
+namespace Trustenterprises\LaravelHashgraph\Models;
 
 class ConsensusMessage
 {
@@ -9,7 +9,6 @@ class ConsensusMessage
 
     private String $message;
 
-    // Optional fields
     private ?string $reference = null;
 
     private bool $allow_synchronous_consensus = false;
@@ -17,12 +16,31 @@ class ConsensusMessage
     /**
      * ConsensusMessage constructor.
      * @param string $message
-     * @param String $topic_id
      */
-    public function __construct(string $message, string $topic_id)
+    public function __construct(string $message)
     {
         $this->message = $message;
-        $this->topic_id = $topic_id;
+    }
+
+    public function forMessageRequest(): array
+    {
+        $message_payload = [
+            'message' => $this->getMessage(),
+            'topic_id' => $this->getTopicId(),
+        ];
+
+        $allow_synchronous = $this->isAllowSynchronousConsensus();
+        $reference = $this->getReference();
+
+        if ($allow_synchronous) {
+            $message_payload['allow_synchronous_consensus'] = true;
+        }
+
+        if ($reference) {
+            $message_payload['reference'] = $reference;
+        }
+
+        return $message_payload;
     }
 
     /**

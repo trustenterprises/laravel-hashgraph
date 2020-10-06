@@ -3,15 +3,20 @@
 namespace Trustenterprises\LaravelHashgraph\Commands;
 
 use Illuminate\Console\Command;
+use Trustenterprises\LaravelHashgraph\LaravelHashgraph;
 
 class LaravelHashgraphCommand extends Command
 {
-    public $signature = 'laravel-hashgraph';
+    public $signature = 'hashgraph:test';
 
     public $description = 'My command';
 
     public function handle()
     {
-        $this->comment('All done');
+//        LaravelHashgraphFacade::
+//        error_log($client->getBalance());
+//        $this->comment('All done');
+
+        error_log(LaravelHashgraph::balance());
     }
 }

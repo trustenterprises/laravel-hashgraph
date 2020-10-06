@@ -1,9 +1,11 @@
 <?php
 
-namespace Trustenterprises\LaravelHashgraph\Http\Client\Models;
+namespace Trustenterprises\LaravelHashgraph\Models;
 
 class TopicInfo
 {
+    const EMPTY_TOPIC_ID = -1;
+
     private String $memo;
 
     private String $topic_id;
@@ -17,6 +19,11 @@ class TopicInfo
     {
         $this->memo = $memo;
         $this->topic_id = $topic_id;
+    }
+
+    public static function emptyTopic()
+    {
+        return new self('', self::EMPTY_TOPIC_ID);
     }
 
     /**

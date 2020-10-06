@@ -17,10 +17,10 @@ class CreateLaravelHashgraphTables extends Migration
 
         Schema::create('hashgraph_consensus_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('reference');
+            $table->string('reference')->index()->nullable();
             $table->string('topic_id');
             $table->string('transaction_id');
-            $table->string('explorer_url');
+            $table->string('explorer_url')->nullable();
             $table->string('consensus_timestamp_seconds');
             $table->string('consensus_timestamp_nanos');
             $table->timestamps();
