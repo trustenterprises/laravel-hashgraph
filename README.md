@@ -1,16 +1,16 @@
 # Laravel Hashgraph: Proof of anything, record any provable trust to Laravel in less than 2 minutes.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/laravel-hashgraph/run-tests?label=tests)](https://github.com//laravel-hashgraph/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel-hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/trustenterprises/hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/mattsmithies/laravel-hashgraph/Tests)](https://github.com//laravel-hashgraph/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/trustenterprises/hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
 
 Trust backed by Hedera Hashgraph using your own serverless REST client by Trust Enterprises.
 
-The project manages any trust events and consensusu responses, it is a full solution for managing [webhook functionality](https://docs.trust.enterprises/rest-api/webhooks) after a client has received consensus.
+The project manages any trust events and consensus responses, it is a full solution for managing [webhook functionality](https://docs.trust.enterprises/rest-api/webhooks) after a client has received consensus.
 
 ## Support us
 
-We're looking for ongoing financial support to help with the continuation of the development of these libraries and projects, if you are interested in sponsoring us [please get in contact](https://trust.enterprises/#contact). 
+We're open to ongoing financial support to help with the continuation of the development of these libraries and projects and help for integration for your current SaaS projects, if you are interested in sponsoring/working with us [please get in contact](https://trust.enterprises/#contact). 
 
 ## Installation
 
@@ -35,7 +35,10 @@ php artisan vendor:publish --provider="Trustenterprises\LaravelHashgraph\Laravel
 This is the contents of the published config file:
 
 ```php
+<?php
+
 return [
+
     /***
      * The URL of your serverless hashgraph client that has been configured through the serverless
      * provider, likely to be vercel.
@@ -46,7 +49,13 @@ return [
      * The generated secret key that you have set for your serverless hashgraph client.
      **/
     'secret_key' => env('HASHGRAPH_SECRET_KEY'),
+
+    /***
+     * The webhook URL that can be configured to receive message events from your Serverless REST API.
+     **/
+    'webhook_route' => env('HASHGRAPH_WEBHOOK_ROUTE', '/hashgraph'),
 ];
+
 ```
 
 ## Deployment with the hedera serverless client
@@ -68,7 +77,7 @@ use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 
 // Code
 $message = new ConsensusMessage('This is an event you wish to store');
-$message->setReference('MattSmithies');
+$message->setReference('MattSmithies'); // optional
 
 LaravelHashgraph::withTopic('Trust Enterprises')->sendMessage($message);
 ```
@@ -98,4 +107,4 @@ If you discover any security related issues, please email info@mattsmithies.co.u
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The Apache 2.0 License. Please see [License File](LICENSE.md) for more information.

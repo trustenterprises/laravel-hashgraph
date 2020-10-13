@@ -21,7 +21,7 @@ class LaravelHashgraphControllerTest extends TestCase
      */
     public function the_hashgraph_webhook_returns_failed()
     {
-        $this->json('POST', '/hashgraph')
+        $this->json('POST', config('hashgraph.webhook_route'))
             ->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertSee('Header X-Signature is required');
     }
@@ -31,7 +31,7 @@ class LaravelHashgraphControllerTest extends TestCase
      */
     public function the_webhook_returns_failed_invalid_payload_for_signature()
     {
-        $this->json('POST', '/hashgraph', $this->mockWebhookPayload(), [
+        $this->json('POST', config('hashgraph.webhook_route'), $this->mockWebhookPayload(), [
            'x-signature' => '123',
         ])->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertSee('Signature does not match payload');
@@ -44,7 +44,7 @@ class LaravelHashgraphControllerTest extends TestCase
     {
         $payload = $this->mockWebhookPayload();
 
-        $this->json('POST', '/hashgraph', $payload, [
+        $this->json('POST', config('hashgraph.webhook_route'), $payload, [
            'x-signature' => Hmac::generate(json_encode($payload)),
         ])->assertStatus(Response::HTTP_BAD_REQUEST)
             ->assertSee('Unable to store consensus message, topic does not exist');
@@ -65,7 +65,7 @@ class LaravelHashgraphControllerTest extends TestCase
 
         $payload = $this->mockWebhookPayload($topic_id);
 
-        $this->json('POST', '/hashgraph', $payload, [
+        $this->json('POST', config('hashgraph.webhook_route'), $payload, [
            'x-signature' => Hmac::generate(json_encode($payload)),
         ])->assertStatus(Response::HTTP_OK);
 
