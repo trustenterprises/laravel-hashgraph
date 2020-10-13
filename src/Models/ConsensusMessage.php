@@ -41,7 +41,7 @@ class ConsensusMessage
 
         $reference = $this->getReference();
 
-        $message_payload['allow_synchronous_consensus'] = $this->getReference();
+        $message_payload['allow_synchronous_consensus'] = $this->isAllowSynchronousConsensus();
 
         if ($reference) {
             $message_payload['reference'] = $reference;
