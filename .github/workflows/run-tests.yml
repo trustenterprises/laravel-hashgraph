@@ -15,7 +15,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         php: [7.4]
         laravel: [7.*]
-        dependency-version: [prefer-stable]
+        dependency-version: [prefer-stable, prefer-lowest]
         include:
           - laravel: 7.*
             testbench: 5.*
