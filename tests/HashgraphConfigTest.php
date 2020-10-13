@@ -20,4 +20,12 @@ class HashgraphConfigTest extends TestCase
     {
         $this->assertNotEmpty(config('hashgraph.secret_key'));
     }
+
+    /**
+     * @test
+     */
+    public function assert_has_webhook_route()
+    {
+        $this->assertNotEmpty(config('hashgraph.webhook_route'));
+    }
 }
