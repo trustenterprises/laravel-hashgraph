@@ -30,7 +30,7 @@ class LaravelHashgraphServiceProvider extends ServiceProvider
              ]);
         }
 
-        Route::macro('hashgraph', function (string $prefix) {
+        Route::macro('hashgraph', function (string $prefix = 'hashgraph') {
             Route::prefix($prefix)->group(function () {
                 Route::post('/', LaravelHashgraphWebhookController::class);
             });
