@@ -4,7 +4,7 @@ namespace Trustenterprises\LaravelHashgraph\Models;
 
 class TopicInfo
 {
-    const EMPTY_TOPIC_ID = -1;
+    const EMPTY_TOPIC_ID = "-1";
 
     private String $memo;
 

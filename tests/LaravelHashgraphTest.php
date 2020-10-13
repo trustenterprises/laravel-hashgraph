@@ -93,7 +93,7 @@ class LaravelHashgraphTest extends TestCase
 
         $this->assertEquals($topic->topic_id, $message_response->getTopicId());
         $this->assertNull($message_response->getReference());
-        $this->assertNull($message_response->getConsensusTimestamp());
+        $this->assertNotNull($message_response->getConsensusTimestamp());
 
         // This tests the response of a synchronous message
         $reference = 'laravel-hashgraph-test';
