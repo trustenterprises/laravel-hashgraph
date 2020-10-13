@@ -11,7 +11,17 @@ class ConsensusMessage
 
     private ?string $reference = null;
 
-    private bool $allow_synchronous_consensus = false;
+    /*
+     * Synchronous consensus defaults to true as the
+     * default serverless provider is Vercel and by
+     * extension AWS Lambda. Async consensus us incompatible
+     * in this current version, due to a serverless container
+     * sleeping directly after a HTTP response is sent.
+     *
+     * With Laravel recommend that all Hashgraph usage is
+     * executed through a Job.
+     */
+    private bool $allow_synchronous_consensus = true;
 
     /**
      * ConsensusMessage constructor.
@@ -29,12 +39,9 @@ class ConsensusMessage
             'topic_id' => $this->getTopicId(),
         ];
 
-        $allow_synchronous = $this->isAllowSynchronousConsensus();
         $reference = $this->getReference();
 
-        if ($allow_synchronous) {
-            $message_payload['allow_synchronous_consensus'] = true;
-        }
+        $message_payload['allow_synchronous_consensus'] = $this->getReference();
 
         if ($reference) {
             $message_payload['reference'] = $reference;
