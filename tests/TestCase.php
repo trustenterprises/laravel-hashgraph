@@ -15,7 +15,9 @@ class TestCase extends Orchestra
 
         $this->withFactories(__DIR__.'/database/factories');
 
-        Route::hashgraph('hashgraph');
+        $hashgraph_route = env('HASHGRAPH_WEBHOOK_ROUTE', '/hashgraph');
+
+        Route::hashgraph($hashgraph_route);
     }
 
     protected function getPackageProviders($app)
@@ -46,5 +48,6 @@ class TestCase extends Orchestra
 
         $app['config']->set('hashgraph.client_url', env('HASHGRAPH_NODE_URL'));
         $app['config']->set('hashgraph.secret_key', env('HASHGRAPH_SECRET_KEY'));
+        $app['config']->set('hashgraph.webhook_route', env('HASHGRAPH_WEBHOOK_ROUTE', '/hashgraph'));
     }
 }
