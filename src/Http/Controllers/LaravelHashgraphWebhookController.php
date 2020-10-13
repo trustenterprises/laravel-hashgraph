@@ -16,7 +16,7 @@ class LaravelHashgraphWebhookController extends Controller
     {
         // Check that the signature exists
         $signature = $request->header('x-signature');
-        abort_unless($signature, Response::HTTP_BAD_REQUEST, 'Header X-Signature is required');
+        abort_unless(! ! $signature, Response::HTTP_BAD_REQUEST, 'Header X-Signature is required');
 
         // Check the signature is valid
         $hash = Hmac::generate($request->getContent());
