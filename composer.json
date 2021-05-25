@@ -3,7 +3,7 @@
     "description": "Laravel package to automatically handle adding trust to any SaaS product",
     "keywords": [
         "hedera",
-        "hashhgraph",
+        "hashgraph",
         "blockchain",
         "trust",
         "crypto",
@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "guzzlehttp/guzzle": "^7.0",
         "ext-json": "*"
     },
