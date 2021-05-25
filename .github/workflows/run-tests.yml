@@ -44,8 +44,5 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
-      - name: Run PHP CS Fixer
-        run: vendor/bin/php-cs-fixer fix . --config=.trustenterprises.php_cs
-        
       - name: Execute tests
         run: vendor/bin/phpunit
