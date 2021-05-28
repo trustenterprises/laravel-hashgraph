@@ -147,5 +147,4 @@ class LaravelHashgraphTest extends TestCase
 
         LaravelHashgraph::withTopic(self::TOPIC_NAME)->updateTopic('');
     }
-
 }

@@ -103,5 +103,4 @@ class FungibleToken
     {
         $this->memo = $memo;
     }
-
 }
