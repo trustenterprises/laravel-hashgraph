@@ -8,6 +8,8 @@ use GuzzleHttp\Exception\GuzzleException;
 use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
+use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
+use Trustenterprises\LaravelHashgraph\Models\FungibleTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
 
 /**
@@ -111,5 +113,21 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents())->data;
 
         return new ConsensusMessageResponse($data);
+    }
+
+    /**
+     * @param FungibleToken $token
+     * @return FungibleTokenResponse
+     * @throws GuzzleException
+     */
+    public function mintFungibleToken(FungibleToken $token): FungibleTokenResponse
+    {
+        $response = $this->guzzle->post('api/token', [
+            'json' => $token->forTokenRequest(),
+        ]);
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new FungibleTokenResponse($data);
     }
 }
