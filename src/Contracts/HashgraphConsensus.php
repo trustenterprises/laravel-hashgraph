@@ -4,6 +4,8 @@ namespace Trustenterprises\LaravelHashgraph\Contracts;
 
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
+use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
+use Trustenterprises\LaravelHashgraph\Models\FungibleTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
 
 /**
@@ -44,4 +46,10 @@ interface HashgraphConsensus
      * @return ConsensusMessageResponse
      */
     public function sendMessageConsensus(ConsensusMessage $message): ConsensusMessageResponse;
+
+    /**
+     * @param FungibleToken $token
+     * @return FungibleTokenResponse
+     */
+    public function mintFungibleToken(FungibleToken $token): FungibleTokenResponse;
 }
