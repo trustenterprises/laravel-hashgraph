@@ -9,6 +9,8 @@ use Trustenterprises\LaravelHashgraph\Exception\HashgraphException;
 use Trustenterprises\LaravelHashgraph\Http\Client\HashgraphClient;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
+use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
+use Trustenterprises\LaravelHashgraph\Models\FungibleTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\HashgraphTopic;
 use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
 
@@ -56,6 +58,17 @@ class LaravelHashgraph
     public static function withTopic(string $topic_name) : self
     {
         return static::withAuthenticatedClient()->setTopic($topic_name);
+    }
+
+    /**
+     * Set the topic key for the transactions.
+     *
+     * @param FungibleToken $token
+     * @return FungibleTokenResponse
+     */
+    public static function mintFungibleToken(FungibleToken $token) : FungibleTokenResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->mintFungibleToken($token);
     }
 
     /**
