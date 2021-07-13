@@ -6,6 +6,9 @@ namespace Trustenterprises\LaravelHashgraph\Http\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
+use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
+use Trustenterprises\LaravelHashgraph\Models\BequestToken;
+use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
 use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
@@ -129,5 +132,25 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents())->data;
 
         return new FungibleTokenResponse($data);
+    }
+
+    public function createAccount(): AccountCreateResponse
+    {
+        $response = $this->guzzle->post('api/account/create');
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new AccountCreateResponse($data);
+    }
+
+    public function bequestToken(BequestToken $bequestToken): BequestTokenResponse
+    {
+        $response = $this->guzzle->post('api/token/bequest', [
+            'json' => $bequestToken->forRequest(),
+        ]);
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new BequestTokenResponse($data);
     }
 }
