@@ -24,7 +24,7 @@ class LaravelHashgraph
      *
      * @var string
      */
-    private string $topic_name;
+    private String $topic_name;
 
     private HashgraphConsensus $client;
 
