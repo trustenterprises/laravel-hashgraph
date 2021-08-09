@@ -144,6 +144,7 @@ class LaravelHashgraphTest extends TestCase
 
         $this->assertNotNull($bequest_response->getAmount());
         $this->assertNotNull($bequest_response->getReceiverId());
+        $this->assertNotNull($bequest_response->getTransactionId());
     }
 
     /**
