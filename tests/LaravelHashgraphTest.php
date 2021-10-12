@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Event;
 use Trustenterprises\LaravelHashgraph\Events\TopicWasCreated;
 use Trustenterprises\LaravelHashgraph\Exception\HashgraphException;
 use Trustenterprises\LaravelHashgraph\LaravelHashgraph;
+use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
+use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
 use Trustenterprises\LaravelHashgraph\Models\HashgraphTopic;
 use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
 
@@ -106,6 +108,43 @@ class LaravelHashgraphTest extends TestCase
 
         $this->assertEquals($reference, $sync_response->getReference());
         $this->assertNotNull($sync_response->getConsensusTimestamp());
+    }
+
+    /**
+     * Mint a fungible token and return a token_id
+     *
+     * @test
+     */
+    public function e2e_mint_fungible_token()
+    {
+        $token = new FungibleToken("e2e", "e2e test token", "10", "This is a memo");
+
+        $hashgraph_token = LaravelHashgraph::mintFungibleToken($token);
+
+        $this->assertNotNull($hashgraph_token->getTokenId());
+    }
+
+    /**
+     * Mint a fungible token and return a token_id
+     *
+     * @test
+     */
+    public function e2e_create_account_and_bequest()
+    {
+        // Create an account
+        $account = LaravelHashgraph::createAccount();
+
+        // Create a token
+        $token = new FungibleToken("e2e", "e2e bequest token test", "10", "e2e bequest token test");
+        $hashgraph_token = LaravelHashgraph::mintFungibleToken($token);
+
+        // Send the bequest to a user
+        $bequest_token = new BequestToken($account->getEncryptedKey(), $hashgraph_token->getTokenId(), $account->getAccountId(), 1);
+        $bequest_response = LaravelHashgraph::bequestToken($bequest_token);
+
+        $this->assertNotNull($bequest_response->getAmount());
+        $this->assertNotNull($bequest_response->getReceiverId());
+        $this->assertNotNull($bequest_response->getTransactionId());
     }
 
     /**

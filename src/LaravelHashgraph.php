@@ -7,8 +7,13 @@ use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
 use Trustenterprises\LaravelHashgraph\Events\TopicWasCreated;
 use Trustenterprises\LaravelHashgraph\Exception\HashgraphException;
 use Trustenterprises\LaravelHashgraph\Http\Client\HashgraphClient;
+use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
+use Trustenterprises\LaravelHashgraph\Models\BequestToken;
+use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
+use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
+use Trustenterprises\LaravelHashgraph\Models\FungibleTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\HashgraphTopic;
 use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
 
@@ -56,6 +61,39 @@ class LaravelHashgraph
     public static function withTopic(string $topic_name) : self
     {
         return static::withAuthenticatedClient()->setTopic($topic_name);
+    }
+
+    /**
+     * Set the topic key for the transactions.
+     *
+     * @param FungibleToken $token
+     * @return FungibleTokenResponse
+     * @throws GuzzleException
+     */
+    public static function mintFungibleToken(FungibleToken $token) : FungibleTokenResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->mintFungibleToken($token);
+    }
+
+    /**
+     * Set the topic key for the transactions.
+     *
+     * @param BequestToken $token
+     * @return BequestTokenResponse
+     */
+    public static function bequestToken(BequestToken $token) : BequestTokenResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->bequestToken($token);
+    }
+
+    /**
+     * Create a new account for a user
+     *
+     * @return AccountCreateResponse
+     */
+    public static function createAccount() : AccountCreateResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->createAccount();
     }
 
     /**

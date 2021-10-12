@@ -6,8 +6,13 @@ namespace Trustenterprises\LaravelHashgraph\Http\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
+use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
+use Trustenterprises\LaravelHashgraph\Models\BequestToken;
+use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
+use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
+use Trustenterprises\LaravelHashgraph\Models\FungibleTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
 
 /**
@@ -111,5 +116,41 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents())->data;
 
         return new ConsensusMessageResponse($data);
+    }
+
+    /**
+     * @param FungibleToken $token
+     * @return FungibleTokenResponse
+     * @throws GuzzleException
+     */
+    public function mintFungibleToken(FungibleToken $token): FungibleTokenResponse
+    {
+        $response = $this->guzzle->post('api/token', [
+            'json' => $token->forTokenRequest(),
+        ]);
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new FungibleTokenResponse($data);
+    }
+
+    public function createAccount(): AccountCreateResponse
+    {
+        $response = $this->guzzle->post('api/account/create');
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new AccountCreateResponse($data);
+    }
+
+    public function bequestToken(BequestToken $bequestToken): BequestTokenResponse
+    {
+        $response = $this->guzzle->post('api/token/bequest', [
+            'json' => $bequestToken->forRequest(),
+        ]);
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new BequestTokenResponse($data);
     }
 }
