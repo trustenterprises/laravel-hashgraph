@@ -50,7 +50,7 @@ class SendToken
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getAmount(): string
     {
