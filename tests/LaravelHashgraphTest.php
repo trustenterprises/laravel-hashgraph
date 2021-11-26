@@ -7,6 +7,7 @@ use Trustenterprises\LaravelHashgraph\Events\TopicWasCreated;
 use Trustenterprises\LaravelHashgraph\Exception\HashgraphException;
 use Trustenterprises\LaravelHashgraph\LaravelHashgraph;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
+use Trustenterprises\LaravelHashgraph\Models\SendToken;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
 use Trustenterprises\LaravelHashgraph\Models\HashgraphTopic;
@@ -170,5 +171,71 @@ class LaravelHashgraphTest extends TestCase
         $this->expectException(HashgraphException::class);
 
         LaravelHashgraph::withTopic(self::TOPIC_NAME)->updateTopic('');
+    }
+
+    /**
+     * TODO: These are a set of "dangerous" tests that relies on the node being connected to Hedera testnet and usinga venly wallet.
+     *
+     * Checking a wallet balance.
+     *
+     * @test
+     */
+    public function check_that_a_venly_balance_is_found()
+    {
+        $account_id = '0.0.13283221';
+        $token_id = '0.0.15647345';
+
+        $token_balance = LaravelHashgraph::getTokenBalance($account_id, $token_id);
+
+        $this->assertIsNumeric($token_balance->getAmount());
+        $this->assertIsNumeric($token_balance->getDecimals());
+        $this->assertIsString($token_balance->getTokenId());
+        $this->assertIsString($token_balance->getRawAmount());
+    }
+
+    /**
+     * Sending a token to a venlu wallet. This test will fail one day. 🤪
+     *
+     * @test
+     */
+    public function send_tokens_to_a_venly_wallet()
+    {
+        // Pre-generated Venly wallet (testnet) (maxes out at 25 assocs)
+        $account_id = '0.0.15657776'; // This venly account has these tokens already
+        $token_id = '0.0.15657534'; // Token already created
+        $amount = 0.000001;
+
+        $send_token = new SendToken($token_id, $account_id, $amount);
+
+        $token_sent = LaravelHashgraph::sendToken($send_token);
+
+        $this->assertTrue($token_sent->hasTransferSucceeded());
+
+        // Expect the updated balance of tokens
+        $token_balance = LaravelHashgraph::getTokenBalance($account_id, $token_id);
+
+        $this->assertNotEmpty($token_balance->getAmount());
+    }
+
+    /**
+     * Attempt to send a token to a full-free-association venlu wallet
+     *
+     * @test
+     */
+    public function failed_send_tokens_to_a_full_venly_wallet()
+    {
+        // Create a token
+        $token = new FungibleToken("TEST-NON-ASSOC", "Send token to non-assoc ", "10", "non-assoc transfer test");
+        $hashgraph_token = LaravelHashgraph::mintFungibleToken($token);
+
+        // Pre-generated Venly wallet (testnet) (maxes out at 25 assocs)
+        $account_id = '0.0.13283221'; // This venly account has maxed out auto association
+
+        // Send token object
+        $send_token = new SendToken($hashgraph_token->getTokenId(), $account_id, 2);
+
+        $token_sent = LaravelHashgraph::sendToken($send_token);
+
+        $this->assertFalse($token_sent->hasTransferSucceeded());
     }
 }

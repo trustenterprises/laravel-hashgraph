@@ -1,6 +1,6 @@
 {
     "name": "trustenterprises/hashgraph",
-    "description": "Laravel package to automatically handle adding trust to any SaaS product",
+    "description": "Laravel package to integrate with Trust Enterprises Hedera REST API",
     "keywords": [
         "hedera",
         "hashgraph",

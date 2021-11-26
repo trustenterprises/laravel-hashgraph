@@ -8,14 +8,18 @@ use Trustenterprises\LaravelHashgraph\Events\TopicWasCreated;
 use Trustenterprises\LaravelHashgraph\Exception\HashgraphException;
 use Trustenterprises\LaravelHashgraph\Http\Client\HashgraphClient;
 use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
+use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\SendTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\SendToken;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
 use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
 use Trustenterprises\LaravelHashgraph\Models\FungibleTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\HashgraphTopic;
 use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
+use function Symfony\Component\String\s;
 
 class LaravelHashgraph
 {
@@ -94,6 +98,16 @@ class LaravelHashgraph
     public static function createAccount() : AccountCreateResponse
     {
         return static::withAuthenticatedClient()->getClient()->createAccount();
+    }
+
+    public static function getTokenBalance(string $account_id, string $token_id) : AccountTokenBalanceResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->getTokenBalance($account_id, $token_id);
+    }
+
+    public static function sendToken(SendToken $sendToken) : SendTokenResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->sendToken($sendToken);
     }
 
     /**

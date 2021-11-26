@@ -7,8 +7,11 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
 use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
+use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\SendTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\SendToken;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessageResponse;
 use Trustenterprises\LaravelHashgraph\Models\FungibleToken;
@@ -152,5 +155,25 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents())->data;
 
         return new BequestTokenResponse($data);
+    }
+
+    public function getTokenBalance(string $account_id, string $token_id): AccountTokenBalanceResponse
+    {
+        $response = $this->guzzle->get('api/account/' . $account_id . '/' . $token_id);
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new AccountTokenBalanceResponse($data);
+    }
+
+    public function sendToken(SendToken $sendToken): SendTokenResponse
+    {
+        $response = $this->guzzle->post('api/token/send', [
+            'json' => $sendToken->forRequest(),
+        ]);
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new SendTokenResponse($data);
     }
 }
