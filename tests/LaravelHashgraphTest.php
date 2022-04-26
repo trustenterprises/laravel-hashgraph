@@ -96,7 +96,7 @@ class LaravelHashgraphTest extends TestCase
 
         $this->assertEquals($topic->topic_id, $message_response->getTopicId());
         $this->assertNull($message_response->getReference());
-        $this->assertNotNull($message_response->getConsensusTimestamp());
+        $this->assertNotNull($message_response->getTransactionId());
 
         // This tests the response of a synchronous message
         $reference = 'laravel-hashgraph-test';
@@ -108,7 +108,7 @@ class LaravelHashgraphTest extends TestCase
         $sync_response = $hashgraph_request->sendMessage($message);
 
         $this->assertEquals($reference, $sync_response->getReference());
-        $this->assertNotNull($sync_response->getConsensusTimestamp());
+        $this->assertNotNull($sync_response->getTransactionId());
     }
 
     /**
@@ -214,7 +214,11 @@ class LaravelHashgraphTest extends TestCase
         // Expect the updated balance of tokens
         $token_balance = LaravelHashgraph::getTokenBalance($account_id, $token_id);
 
-        $this->assertNotEmpty($token_balance->getAmount());
+        $this->assertNotEmpty($token_balance->getRawAmount());
+
+        $token_holdings = LaravelHashgraph::checkTokenHoldings($account_id, $token_id);
+
+        $this->assertTrue($token_holdings->hasTokens());
     }
 
     /**
