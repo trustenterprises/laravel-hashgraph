@@ -8,6 +8,7 @@ use Trustenterprises\LaravelHashgraph\Events\TopicWasCreated;
 use Trustenterprises\LaravelHashgraph\Exception\HashgraphException;
 use Trustenterprises\LaravelHashgraph\Http\Client\HashgraphClient;
 use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
+use Trustenterprises\LaravelHashgraph\Models\AccountHoldingsResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
@@ -103,6 +104,11 @@ class LaravelHashgraph
     public static function getTokenBalance(string $account_id, string $token_id) : AccountTokenBalanceResponse
     {
         return static::withAuthenticatedClient()->getClient()->getTokenBalance($account_id, $token_id);
+    }
+
+    public static function checkTokenHoldings(string $account_id, string $token_id) : AccountHoldingsResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->checkTokenHoldings($account_id, $token_id);
     }
 
     public static function sendToken(SendToken $sendToken) : SendTokenResponse

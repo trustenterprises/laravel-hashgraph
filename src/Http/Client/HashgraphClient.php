@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
 use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
+use Trustenterprises\LaravelHashgraph\Models\AccountHoldingsResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
@@ -164,6 +165,17 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents())->data;
 
         return new AccountTokenBalanceResponse($data);
+    }
+
+
+    public function checkTokenHoldings(string $account_id, string $token_ids): AccountHoldingsResponse
+    {
+        // Mocking this atm.
+        $response = $this->guzzle->get('api/account/' . $account_id . '/holdings/' . $token_ids . ',' .$token_ids);
+
+        $data = json_decode($response->getBody()->getContents())->data;
+
+        return new AccountHoldingsResponse($data);
     }
 
     public function sendToken(SendToken $sendToken): SendTokenResponse
