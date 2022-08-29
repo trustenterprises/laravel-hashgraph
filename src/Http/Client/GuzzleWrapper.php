@@ -14,6 +14,7 @@ class GuzzleWrapper
                 'Accept' => 'application/json',
                 'x-api-key' => config('hashgraph.secret_key'),
             ],
+            'http_errors' => false
         ]);
     }
 }

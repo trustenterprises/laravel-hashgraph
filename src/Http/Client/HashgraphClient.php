@@ -11,6 +11,16 @@ use Trustenterprises\LaravelHashgraph\Models\AccountHoldingsResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNft;
+use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNftResponse;
+use Trustenterprises\LaravelHashgraph\Models\NFT\MintToken;
+use Trustenterprises\LaravelHashgraph\Models\NFT\MintTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\NFT\NftMetadata;
+use Trustenterprises\LaravelHashgraph\Models\NFT\NftMetadataResponse;
+use Trustenterprises\LaravelHashgraph\Models\NFT\NonFungibleToken;
+use Trustenterprises\LaravelHashgraph\Models\NFT\NonFungibleTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\NFT\TransferNft;
+use Trustenterprises\LaravelHashgraph\Models\NFT\TransferNftResponse;
 use Trustenterprises\LaravelHashgraph\Models\SendTokenResponse;
 use Trustenterprises\LaravelHashgraph\Models\SendToken;
 use Trustenterprises\LaravelHashgraph\Models\ConsensusMessage;
@@ -25,6 +35,9 @@ use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
  */
 class HashgraphClient implements HashgraphConsensus
 {
+    /**
+     * @var Client
+     */
     private Client $guzzle;
 
     /**
@@ -36,6 +49,9 @@ class HashgraphClient implements HashgraphConsensus
         $this->guzzle = $guzzle;
     }
 
+    /**
+     * @return HashgraphConsensus
+     */
     public static function createAuthorisedInstance() : HashgraphConsensus
     {
         $guzzle = GuzzleWrapper::getAuthenticatedGuzzleInstance();
@@ -138,6 +154,10 @@ class HashgraphClient implements HashgraphConsensus
         return new FungibleTokenResponse($data);
     }
 
+    /**
+     * @return AccountCreateResponse
+     * @throws GuzzleException
+     */
     public function createAccount(): AccountCreateResponse
     {
         $response = $this->guzzle->post('api/account/create');
@@ -147,6 +167,11 @@ class HashgraphClient implements HashgraphConsensus
         return new AccountCreateResponse($data);
     }
 
+    /**
+     * @param BequestToken $bequestToken
+     * @return BequestTokenResponse
+     * @throws GuzzleException
+     */
     public function bequestToken(BequestToken $bequestToken): BequestTokenResponse
     {
         $response = $this->guzzle->post('api/token/bequest', [
@@ -158,6 +183,12 @@ class HashgraphClient implements HashgraphConsensus
         return new BequestTokenResponse($data);
     }
 
+    /**
+     * @param string $account_id
+     * @param string $token_id
+     * @return AccountTokenBalanceResponse
+     * @throws GuzzleException
+     */
     public function getTokenBalance(string $account_id, string $token_id): AccountTokenBalanceResponse
     {
         $response = $this->guzzle->get('api/account/' . $account_id . '/' . $token_id);
@@ -168,6 +199,12 @@ class HashgraphClient implements HashgraphConsensus
     }
 
 
+    /**
+     * @param string $account_id
+     * @param string $token_ids
+     * @return AccountHoldingsResponse
+     * @throws GuzzleException
+     */
     public function checkTokenHoldings(string $account_id, string $token_ids): AccountHoldingsResponse
     {
         // Mocking this atm.
@@ -178,6 +215,11 @@ class HashgraphClient implements HashgraphConsensus
         return new AccountHoldingsResponse($data);
     }
 
+    /**
+     * @param SendToken $sendToken
+     * @return SendTokenResponse
+     * @throws GuzzleException
+     */
     public function sendToken(SendToken $sendToken): SendTokenResponse
     {
         $response = $this->guzzle->post('api/token/send', [
@@ -187,5 +229,89 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents())->data;
 
         return new SendTokenResponse($data);
+    }
+
+    /**
+     *
+     *  $nft = (new NonFungibleToken('Matt','Matt NFT',123))
+            ->enableRoyalties()
+            ->setFallbackFee(1)
+            ->setRoyaltyFee(0.1)
+            ->setRoyaltyAccountId('0.0.1156')
+            ->WARNING_enableUnsafeKeys();
+     *
+     * @param NonFungibleToken $nft
+     * @return NonFungibleTokenResponse
+     * @throws GuzzleException
+     */
+    public function createNft(NonFungibleToken $nft): NonFungibleTokenResponse {
+        $response = $this->guzzle->post('api/nft', [
+            'json' => $nft->forNftRequest()
+        ]);
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new NonFungibleTokenResponse($data);
+    }
+
+    /**
+     * Mint a token from a collection with a cid
+     *
+     * @param String $token_id
+     * @param MintToken $mint
+     * @return MintTokenResponse
+     * @throws GuzzleException
+     */
+    public function mintNft(String $token_id, MintToken $mint): MintTokenResponse {
+        $response = $this->guzzle->post('api/nft/' . $token_id . '/mint', [
+            'json' => $mint->forRequest()
+        ]);
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new MintTokenResponse($data);
+    }
+
+    /**
+     * Generate a CID with viable HIP412 compliant metadata using NFT storage
+     *
+     * @param NftMetadata $metadata
+     * @return NftMetadataResponse
+     * @throws GuzzleException
+     */
+    public function createMetadata(NftMetadata $metadata): NftMetadataResponse {
+        $response = $this->guzzle->post('api/nft/metadata', $metadata->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new NftMetadataResponse($data);
+    }
+
+    /**
+     * Transfer an NFT from a treasury to a user.
+     *
+     * @param TransferNft $transferNft
+     * @return TransferNftResponse
+     * @throws GuzzleException
+     */
+    public function transferNft(TransferNft $transferNft): TransferNftResponse {
+        $response = $this->guzzle->post('api/nft/transfer', $transferNft->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new TransferNftResponse($data);
+    }
+
+    /**
+     * @param ClaimNft $claimNft
+     * @return ClaimNftResponse
+     * @throws GuzzleException
+     */
+    public function claimNft(ClaimNft $claimNft): ClaimNftResponse {
+        $response = $this->guzzle->post('api/nft/claim', $claimNft->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new ClaimNftResponse($data);
     }
 }
