@@ -1,4 +1,4 @@
-# Laravel Hashgraph: Proof of anything, record any provable trust to Laravel in less than 2 minutes.
+# Laravel Hashgraph API, create NFTs, permissioned marketplaces, or create a foundational L2 with base consensus.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/trustenterprises/hashgraph.svg?style=flat-square)](https://packagist.org/packages//laravel-hashgraph)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/mattsmithies/laravel-hashgraph/Tests)](https://github.com//laravel-hashgraph/actions?query=workflow%3Arun-tests+branch%3Amaster)
