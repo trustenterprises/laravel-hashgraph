@@ -149,6 +149,38 @@ class LaravelHashgraphTest extends TestCase
     }
 
     /**
+     * Mint a fungible token with decimals and check correct balance
+     *
+     * @test
+     */
+    public function e2e_create_decimal_token_send_to_account()
+    {
+        // Use decimals for token and transfer
+        $decimals = 2;
+
+        // Create an account
+        $account = LaravelHashgraph::createAccount();
+
+        // Create a token
+        $token = new FungibleToken("e2e", "e2e decimal token test", "10", "e2e bequest token test");
+
+        // Ensure decimals
+        $token->setDecimals($decimals);
+
+        $hashgraph_token = LaravelHashgraph::mintFungibleToken($token);
+        
+        // Send the bequest to a user
+        $bequest_token = new BequestToken($account->getEncryptedKey(), $hashgraph_token->getTokenId(), $account->getAccountId(), 1);
+
+        // Ensure decimal bequest
+        $bequest_token->setDecimals($decimals);
+
+        $bequest_response = LaravelHashgraph::bequestToken($bequest_token);
+
+        $this->assertEquals(1, (int) $bequest_response->getAmount());
+    }
+
+    /**
      * @test
      */
     public function check_that_a_bad_topic_cannot_be_duplicated()
@@ -242,4 +274,5 @@ class LaravelHashgraphTest extends TestCase
 
         $this->assertFalse($token_sent->hasTransferSucceeded());
     }
+
 }
