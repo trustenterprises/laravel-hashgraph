@@ -12,6 +12,8 @@ class BequestToken
 
     private String $amount;
 
+    private ?int $decimals = null;
+
     /**
      * BequestToken constructor.
      * @param String $encrypted_receiver_key
@@ -29,12 +31,18 @@ class BequestToken
 
     public function forRequest(): array
     {
-        return [
+        $payload = [
             'encrypted_receiver_key' => $this->getEncryptedReceiverKey(),
             'token_id' => $this->getTokenId(),
             'receiver_id' => $this->getReceiverId(),
             'amount' => $this->getAmount(),
         ];
+
+        if ($this->getDecimals()) {
+            $payload['decimals'] = $this->getDecimals();
+        }
+
+        return $payload;
     }
 
     /**
@@ -67,5 +75,21 @@ class BequestToken
     public function getAmount(): string
     {
         return $this->amount;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDecimals(): ?int
+    {
+        return $this->decimals;
+    }
+
+    /**
+     * @param int|null $decimals
+     */
+    public function setDecimals(?int $decimals): void
+    {
+        $this->decimals = $decimals;
     }
 }

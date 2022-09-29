@@ -10,6 +10,8 @@ class SendToken
 
     private String $amount;
 
+    private ?int $decimals = null;
+
     /**
      * SendToken constructor.
      *
@@ -26,11 +28,17 @@ class SendToken
 
     public function forRequest(): array
     {
-        return [
+        $payload = [
             'token_id' => $this->getTokenId(),
             'receiver_id' => $this->getReceiverId(),
             'amount' => $this->getAmount(),
         ];
+
+        if ($this->getDecimals()) {
+            $payload['decimals'] = $this->getDecimals();
+        }
+
+        return $payload;
     }
 
     /**
@@ -55,5 +63,21 @@ class SendToken
     public function getAmount(): string
     {
         return $this->amount;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDecimals(): ?int
+    {
+        return $this->decimals;
+    }
+
+    /**
+     * @param int $decimals
+     */
+    public function setDecimals(int $decimals): void
+    {
+        $this->decimals = $decimals;
     }
 }

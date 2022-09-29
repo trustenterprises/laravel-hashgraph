@@ -13,6 +13,8 @@ class FungibleToken
 
     private String $memo;
 
+    private ?int $decimals = null;
+
     /**
      * FungibleToken constructor.
      * @param String $symbol
@@ -30,14 +32,18 @@ class FungibleToken
 
     public function forTokenRequest(): array
     {
-        $token_payload = [
+        $payload = [
             'memo' => $this->getMemo(),
             'symbol' => $this->getSymbol(),
             'name' => $this->getName(),
             'supply' => $this->getSupply(),
         ];
 
-        return $token_payload;
+        if ($this->getDecimals()) {
+            $payload['decimals'] = $this->getDecimals();
+        }
+
+        return $payload;
     }
 
     /**
@@ -102,5 +108,21 @@ class FungibleToken
     public function setMemo(string $memo): void
     {
         $this->memo = $memo;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDecimals(): ?int
+    {
+        return $this->decimals;
+    }
+
+    /**
+     * @param int|null $decimals
+     */
+    public function setDecimals(?int $decimals): void
+    {
+        $this->decimals = $decimals;
     }
 }

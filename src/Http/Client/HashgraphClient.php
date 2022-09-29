@@ -186,12 +186,20 @@ class HashgraphClient implements HashgraphConsensus
     /**
      * @param string $account_id
      * @param string $token_id
+     * @param int|null $decimals
      * @return AccountTokenBalanceResponse
      * @throws GuzzleException
      */
-    public function getTokenBalance(string $account_id, string $token_id): AccountTokenBalanceResponse
+    public function getTokenBalance(string $account_id, string $token_id, ?int $decimals = null): AccountTokenBalanceResponse
     {
-        $response = $this->guzzle->get('api/account/' . $account_id . '/' . $token_id);
+        $uri = 'api/account/' . $account_id . '/' . $token_id;
+
+        // Explicitly append decimal param.
+        if ($decimals) {
+            $uri .= '?decimals=' . $decimals;
+        }
+
+        $response = $this->guzzle->get($uri);
 
         $data = json_decode($response->getBody()->getContents())->data;
 
