@@ -160,9 +160,9 @@ class LaravelHashgraph
         return static::withAuthenticatedClient()->getClient()->createAccount();
     }
 
-    public static function getTokenBalance(string $account_id, string $token_id) : AccountTokenBalanceResponse
+    public static function getTokenBalance(string $account_id, string $token_id, ?int $decimals = null) : AccountTokenBalanceResponse
     {
-        return static::withAuthenticatedClient()->getClient()->getTokenBalance($account_id, $token_id);
+        return static::withAuthenticatedClient()->getClient()->getTokenBalance($account_id, $token_id, $decimals);
     }
 
     public static function checkTokenHoldings(string $account_id, string $token_id) : AccountHoldingsResponse
