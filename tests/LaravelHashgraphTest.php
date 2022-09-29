@@ -168,7 +168,7 @@ class LaravelHashgraphTest extends TestCase
         $token->setDecimals($decimals);
 
         $hashgraph_token = LaravelHashgraph::mintFungibleToken($token);
-        
+
         // Send the bequest to a user
         $bequest_token = new BequestToken($account->getEncryptedKey(), $hashgraph_token->getTokenId(), $account->getAccountId(), 1);
 
