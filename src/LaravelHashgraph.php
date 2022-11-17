@@ -12,6 +12,8 @@ use Trustenterprises\LaravelHashgraph\Models\AccountHoldingsResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNft;
+use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNftResponse;
 use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNft;
 use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNftResponse;
 use Trustenterprises\LaravelHashgraph\Models\NFT\MintToken;
@@ -127,6 +129,16 @@ class LaravelHashgraph
     public static function transferNonFungibleToken(TransferNft $transferNft) : TransferNftResponse
     {
         return static::withAuthenticatedClient()->getClient()->transferNft($transferNft);
+    }
+
+    /**
+     * Batch transfer an NFT to a user
+     *
+     * @throws GuzzleException
+     */
+    public static function batchTransferNonFungibleToken(BatchTransferNft $batchTransferNft) : BatchTransferNftResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->batchTransferNft($batchTransferNft);
     }
 
     /**
