@@ -96,17 +96,17 @@ class NonFungibleToken
     }
 
     /**
-     * @return String
+     * @return Int
      */
-    public function getSupply(): string
+    public function getSupply(): Int
     {
         return $this->supply;
     }
 
     /**
-     * @param String $supply
+     * @param Int $supply
      */
-    public function setSupply(string $supply): void
+    public function setSupply(int $supply): void
     {
         $this->supply = $supply;
     }
