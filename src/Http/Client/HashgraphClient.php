@@ -11,6 +11,8 @@ use Trustenterprises\LaravelHashgraph\Models\AccountHoldingsResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNft;
+use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNftResponse;
 use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNft;
 use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNftResponse;
 use Trustenterprises\LaravelHashgraph\Models\NFT\MintToken;
@@ -308,6 +310,21 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents());
 
         return new TransferNftResponse($data);
+    }
+
+    /**
+     * Transfer a batch of NFTs from a treasury to a user.
+     *
+     * @param BatchTransferNft $transferNft
+     * @return BatchTransferNftResponse
+     * @throws GuzzleException
+     */
+    public function batchTransferNft(BatchTransferNft $transferNft): BatchTransferNftResponse {
+        $response = $this->guzzle->post('api/nft/batch', $transferNft->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new BatchTransferNftResponse($data);
     }
 
     /**
