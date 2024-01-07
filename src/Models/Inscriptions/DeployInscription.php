@@ -93,7 +93,7 @@ class DeployInscription
     }
 
     /**
-     * @return int|Integer
+     * @return int
      */
     public function getMax()
     {
@@ -101,7 +101,7 @@ class DeployInscription
     }
 
     /**
-     * @param int|Integer $max
+     * @param int $max
      */
     public function setMax($max): void
     {
