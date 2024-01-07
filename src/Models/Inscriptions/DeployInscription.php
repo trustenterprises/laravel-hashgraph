@@ -71,7 +71,7 @@ class DeployInscription
     /**
      * @param String|string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -87,7 +87,7 @@ class DeployInscription
     /**
      * @param String|string $ticker
      */
-    public function setTicker($ticker)
+    public function setTicker($ticker): void
     {
         $this->ticker = $ticker;
     }
@@ -103,15 +103,12 @@ class DeployInscription
     /**
      * @param int|Integer $max
      */
-    public function setMax($max)
+    public function setMax($max): void
     {
         $this->max = $max;
     }
 
-    /**
-     * @return int
-     */
-    public function getLimit()
+    public function getLimit(): int|null
     {
         return $this->limit;
     }
@@ -119,15 +116,15 @@ class DeployInscription
     /**
      * @param int $limit
      */
-    public function setLimit($limit)
+    public function setLimit($limit): void
     {
         $this->limit = $limit;
     }
 
     /**
-     * @return String
+     * @return null|string
      */
-    public function getMetadata()
+    public function getMetadata(): string|null
     {
         return $this->metadata;
     }
@@ -135,15 +132,15 @@ class DeployInscription
     /**
      * @param String $metadata
      */
-    public function setMetadata($metadata)
+    public function setMetadata($metadata): void
     {
         $this->metadata = $metadata;
     }
 
     /**
-     * @return String
+     * @return null|string
      */
-    public function getMemo()
+    public function getMemo(): string|null
     {
         return $this->memo;
     }
@@ -151,15 +148,15 @@ class DeployInscription
     /**
      * @param String $memo
      */
-    public function setMemo($memo)
+    public function setMemo($memo): void
     {
         $this->memo = $memo;
     }
 
     /**
-     * @return String
+     * @return null|string
      */
-    public function getPrivateTopicId()
+    public function getPrivateTopicId(): string|null
     {
         return $this->topic_id;
     }
@@ -167,7 +164,7 @@ class DeployInscription
     /**
      * @param String $topic_id
      */
-    public function setPrivateTopic($topic_id)
+    public function setPrivateTopic($topic_id): void
     {
         $this->topic_id = $topic_id;
     }

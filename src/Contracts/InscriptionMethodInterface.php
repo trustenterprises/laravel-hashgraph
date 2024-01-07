@@ -11,7 +11,8 @@ use Trustenterprises\LaravelHashgraph\Models\Inscriptions\TransferInscription;
 interface InscriptionMethodInterface
 {
     /**
-     * @param MintInscription $request
+     * @param DeployInscription $request
+     *
      * @return InscriptionResponse
      */
     public function deployInscription(DeployInscription $request): InscriptionResponse;

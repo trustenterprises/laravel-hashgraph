@@ -11,7 +11,7 @@ class LaravelHashgraphCommand extends Command
 
     public $description = 'My command';
 
-    public function handle()
+    public function handle(): void
     {
 //        LaravelHashgraphFacade::
 //        error_log($client->getBalance());

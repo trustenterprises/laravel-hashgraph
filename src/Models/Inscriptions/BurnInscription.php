@@ -58,15 +58,15 @@ class BurnInscription
     /**
      * @param String|string $ticker
      */
-    public function setTicker($ticker)
+    public function setTicker($ticker): void
     {
         $this->ticker = $ticker;
     }
 
     /**
-     * @return String
+     * @return null|string
      */
-    public function getMemo()
+    public function getMemo(): string|null
     {
         return $this->memo;
     }
@@ -74,15 +74,15 @@ class BurnInscription
     /**
      * @param String $memo
      */
-    public function setMemo($memo)
+    public function setMemo($memo): void
     {
         $this->memo = $memo;
     }
 
     /**
-     * @return String
+     * @return null|string
      */
-    public function getPrivateTopicId()
+    public function getPrivateTopicId(): string|null
     {
         return $this->topic_id;
     }
@@ -90,7 +90,7 @@ class BurnInscription
     /**
      * @param String $topic_id
      */
-    public function setPrivateTopic($topic_id)
+    public function setPrivateTopic($topic_id): void
     {
         $this->topic_id = $topic_id;
     }
@@ -106,7 +106,7 @@ class BurnInscription
     /**
      * @param string|string $from
      */
-    public function setFrom($from)
+    public function setFrom($from): void
     {
         $this->from = $from;
     }
@@ -122,7 +122,7 @@ class BurnInscription
     /**
      * @param int|int $amount
      */
-    public function setAmount($amount)
+    public function setAmount($amount): void
     {
         $this->amount = $amount;
     }

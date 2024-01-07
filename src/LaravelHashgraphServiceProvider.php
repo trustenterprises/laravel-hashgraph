@@ -11,7 +11,7 @@ class LaravelHashgraphServiceProvider extends ServiceProvider
 {
     const HASHGRAPH_SERVICE_NAME = 'hashgraph_trust';
 
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([

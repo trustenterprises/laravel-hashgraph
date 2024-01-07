@@ -348,8 +348,9 @@ class HashgraphClient implements HashgraphConsensus, InscriptionMethodInterface
 
     /**
      * HCS20 Inscription Methods
+     *
+     * @param DeployInscription $request
      */
-
     public function deployInscription(DeployInscription $request): InscriptionResponse
     {
         $response = $this->guzzle->post('api/inscription/deploy', $request->forRequest());
