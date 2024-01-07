@@ -6,11 +6,17 @@ namespace Trustenterprises\LaravelHashgraph\Http\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
+use Trustenterprises\LaravelHashgraph\Contracts\InscriptionMethodInterface;
 use Trustenterprises\LaravelHashgraph\Models\AccountCreateResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountHoldingsResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\BurnInscription;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\DeployInscription;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\MintInscription;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\InscriptionResponse;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\TransferInscription;
 use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNft;
 use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNftResponse;
 use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNft;
@@ -35,7 +41,7 @@ use Trustenterprises\LaravelHashgraph\Models\TopicInfo;
  * Class ServerlessHashgraphClient
  * @package Trustenterprises\LaravelHashgraph\Http\Client
  */
-class HashgraphClient implements HashgraphConsensus
+class HashgraphClient implements HashgraphConsensus, InscriptionMethodInterface
 {
     /**
      * @var Client
@@ -338,5 +344,46 @@ class HashgraphClient implements HashgraphConsensus
         $data = json_decode($response->getBody()->getContents());
 
         return new ClaimNftResponse($data);
+    }
+
+    /**
+     * HCS20 Inscription Methods
+     *
+     * @param DeployInscription $request
+     */
+    public function deployInscription(DeployInscription $request): InscriptionResponse
+    {
+        $response = $this->guzzle->post('api/inscription/deploy', $request->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new InscriptionResponse($data);
+    }
+
+    public function mintInscription(MintInscription $request): InscriptionResponse
+    {
+        $response = $this->guzzle->post("api/inscription/{$request->getTicker()}/mint", $request->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new InscriptionResponse($data);
+    }
+
+    public function burnInscription(BurnInscription $request): InscriptionResponse
+    {
+        $response = $this->guzzle->post("api/inscription/{$request->getTicker()}/burn", $request->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new InscriptionResponse($data);
+    }
+
+    public function transferInscription(TransferInscription $request): InscriptionResponse
+    {
+        $response = $this->guzzle->post("api/inscription/{$request->getTicker()}/transfer", $request->forRequest());
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return new InscriptionResponse($data);
     }
 }

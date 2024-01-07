@@ -21,7 +21,7 @@ class TopicInfo
         $this->topic_id = $topic_id;
     }
 
-    public static function emptyTopic()
+    public static function emptyTopic(): self
     {
         return new self('', self::EMPTY_TOPIC_ID);
     }

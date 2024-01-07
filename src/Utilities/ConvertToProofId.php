@@ -10,7 +10,7 @@ class ConvertToProofId
      * @param $transaction_id
      * @return string
      */
-    public static function create($transaction_id): string
+    public static function create(string $transaction_id): string
     {
         $split_tx = explode('@', $transaction_id);
         $ts = explode('.', $split_tx[1]);

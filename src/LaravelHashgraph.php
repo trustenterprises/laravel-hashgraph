@@ -3,6 +3,7 @@
 namespace Trustenterprises\LaravelHashgraph;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Trustenterprises\LaravelHashgraph\Contracts\InscriptionMethodInterface;
 use Trustenterprises\LaravelHashgraph\Contracts\HashgraphConsensus;
 use Trustenterprises\LaravelHashgraph\Events\TopicWasCreated;
 use Trustenterprises\LaravelHashgraph\Exception\HashgraphException;
@@ -12,6 +13,11 @@ use Trustenterprises\LaravelHashgraph\Models\AccountHoldingsResponse;
 use Trustenterprises\LaravelHashgraph\Models\AccountTokenBalanceResponse;
 use Trustenterprises\LaravelHashgraph\Models\BequestToken;
 use Trustenterprises\LaravelHashgraph\Models\BequestTokenResponse;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\BurnInscription;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\DeployInscription;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\MintInscription;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\InscriptionResponse;
+use Trustenterprises\LaravelHashgraph\Models\Inscriptions\TransferInscription;
 use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNft;
 use Trustenterprises\LaravelHashgraph\Models\NFT\BatchTransferNftResponse;
 use Trustenterprises\LaravelHashgraph\Models\NFT\ClaimNft;
@@ -149,6 +155,46 @@ class LaravelHashgraph
     public static function claimNonFungibleToken(ClaimNft $claimNft) : ClaimNftResponse
     {
         return static::withAuthenticatedClient()->getClient()->claimNft($claimNft);
+    }
+
+    /**
+     * Deploy a new inscription
+     *
+     * @throws GuzzleException
+     */
+    public static function deployInscription(DeployInscription $deployInscription) : InscriptionResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->deployInscription($deployInscription);
+    }
+
+    /**
+     * Mint a new inscription
+     *
+     * @throws GuzzleException
+     */
+    public static function mintInscription(MintInscription $mintInscription) : InscriptionResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->mintInscription($mintInscription);
+    }
+
+    /**
+     * Burn a inscription
+     *
+     * @throws GuzzleException
+     */
+    public static function burnInscription(BurnInscription $burnInscription) : InscriptionResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->burnInscription($burnInscription);
+    }
+
+    /**
+     * Transfer a inscription
+     *
+     * @throws GuzzleException
+     */
+    public static function transferInscription(TransferInscription $transferInscription) : InscriptionResponse
+    {
+        return static::withAuthenticatedClient()->getClient()->transferInscription($transferInscription);
     }
 
     /**
@@ -292,7 +338,7 @@ class LaravelHashgraph
     /**
      * @return HashgraphClient
      */
-    public function getClient(): HashgraphConsensus
+    public function getClient(): InscriptionMethodInterface
     {
         return $this->client;
     }

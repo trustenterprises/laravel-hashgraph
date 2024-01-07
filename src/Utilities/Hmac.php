@@ -11,7 +11,7 @@ class Hmac
      * @param $content
      * @return string
      */
-    public static function generate($content): string
+    public static function generate(string $content): string
     {
         return hash_hmac('sha256', $content, config('hashgraph.secret_key'));
     }
