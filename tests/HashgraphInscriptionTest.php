@@ -28,11 +28,11 @@ class HashgraphInscriptionTest extends TestCase
 
         $deploy->setPrivateTopic(self::$TOPIC_ID);
 
-        $minted = LaravelHashgraph::deployInscription($deploy);
+        $result = LaravelHashgraph::deployInscription($deploy);
 
-        $inscription = $minted->getInscription();
+        $inscription = $result->getInscription();
 
-        $this->assertTrue($minted->hasSucceeded());
+        $this->assertTrue($result->hasSucceeded());
 
         $this->assertEquals(300, $inscription->max);
         $this->assertEquals('TICK1', $inscription->tick);
@@ -52,11 +52,11 @@ class HashgraphInscriptionTest extends TestCase
 
         $mint->setPrivateTopic(self::$TOPIC_ID);
 
-        $minted = LaravelHashgraph::mintInscription($mint);
+        $result = LaravelHashgraph::mintInscription($mint);
 
-        $inscription = $minted->getInscription();
+        $inscription = $result->getInscription();
 
-        $this->assertTrue($minted->hasSucceeded());
+        $this->assertTrue($result->hasSucceeded());
 
         $this->assertEquals('TICK1', $inscription->tick);
         $this->assertEquals('0.0.1', $inscription->to);
@@ -77,11 +77,11 @@ class HashgraphInscriptionTest extends TestCase
 
         $burn->setPrivateTopic(self::$TOPIC_ID);
 
-        $minted = LaravelHashgraph::burnInscription($burn);
+        $result = LaravelHashgraph::burnInscription($burn);
 
-        $inscription = $minted->getInscription();
+        $inscription = $result->getInscription();
 
-        $this->assertTrue($minted->hasSucceeded());
+        $this->assertTrue($result->hasSucceeded());
 
         $this->assertEquals('TICK1', $inscription->tick);
         $this->assertEquals('0.0.1', $inscription->from);
@@ -101,11 +101,11 @@ class HashgraphInscriptionTest extends TestCase
 
         $transfer->setPrivateTopic(self::$TOPIC_ID);
 
-        $minted = LaravelHashgraph::transferInscription($transfer);
+        $result = LaravelHashgraph::transferInscription($transfer);
 
-        $inscription = $minted->getInscription();
+        $inscription = $result->getInscription();
 
-        $this->assertTrue($minted->hasSucceeded());
+        $this->assertTrue($result->hasSucceeded());
 
         $this->assertEquals('TICK1', $inscription->tick);
         $this->assertEquals('0.0.1', $inscription->from);
